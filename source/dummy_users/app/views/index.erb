@@ -1,5 +1,7 @@
 <div class="container">
-  <h4 class="center green"><%= @logged_in %></h4>
+  <h4 class="center green">
+    <a href="/users/<%= session[:user_id] %>"><%= @logged_in %></a>
+  </h4>
   <h4 class="center red"><%= @error %></h4>
   <fieldset>
     <legend>Login</legend>

@@ -1,13 +1,16 @@
+require 'digest'
+
 enable :sessions
 
 get '/' do
-  @logged_in = "Logged in!" if session[:logged_in]
+  @logged_in = "Logged in!" if session[:user_id]
   @error = session[:error]
+  session[:error] = nil
   erb :index
 end
 
-post '/secret_page' do
-  if session[:logged_in]
+get '/secret_page' do
+  if session[:user_id]
     erb :secret_page
   else
     redirect '/'
@@ -15,10 +18,10 @@ post '/secret_page' do
 end
 
 post '/users/new' do
-  new_user = User.new(params)
+  new_user = User.new(email: params[:email], password: Digest::SHA256.hexdigest(params[:password]))
   if new_user.valid?
     new_user.save
-    session[:logged_in] = 'true'
+    session[:user_id] = new_user.id
     redirect "/users/#{new_user.id}"
   else
     session[:error] = "Invalid info"
@@ -33,7 +36,7 @@ end
 
 post '/login' do
   if User.authenticate(params)
-    session[:logged_in] = 'true'
+    session[:user_id] = User.where(email: params[:email]).first.id
     redirect '/secret_page'
   else
     session[:error] = "Authentication failed."
@@ -42,6 +45,6 @@ post '/login' do
 end
 
 post '/logout' do
-  session[:logged_in] = nil
+  session[:user_id] = nil
   redirect '/'
 end
