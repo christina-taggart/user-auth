@@ -1,13 +1,15 @@
 <div class="container">
+  <h4 class="center green"><%= @logged_in %></h4>
+  <h4 class="center red"><%= @error %></h4>
   <fieldset>
     <legend>Login</legend>
-      <form>
+      <form method="post" action="/secret_page">
         <table>
         <tr>
-          <td>Username:</td><td><input type="text" name="email"></td>
+          <td>Username: </td><td><input type="text" name="email"></td>
         </tr>
         <tr>
-          <td>Password</td><td><input type="password" name="password"></td>
+          <td>Password: </td><td><input type="password" name="password"></td>
         </tr>
         <tr>
           <td><input type="submit" value="Submit"></td>
