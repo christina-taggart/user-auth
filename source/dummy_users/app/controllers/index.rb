@@ -40,3 +40,8 @@ post '/login' do
     redirect '/'
   end
 end
+
+post '/logout' do
+  session[:logged_in] = nil
+  redirect '/'
+end

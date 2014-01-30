@@ -1,4 +1,8 @@
 <div class="container">
   <p><b>Email:</b> <%= @user.email %></p>
   <p><b>Password:</b> <%= @user.password %></p>
+<form method="post" action='/logout'>
+  <input type="submit" value="Logout">
+</form>
 </div>
+
